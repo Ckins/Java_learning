@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<project name="javaLearning-1" default="jar" basedir=".">
+  
+  <target name="clean" description="清除任务">
+    <delete dir="build"/>
+  </target>
+
+  <target name="compile" depends= "clean" description="编译任务">
+    <mkdir dir="build/classes"/>
+    <javac srcdir="src" destdir="build/classes" includeantruntime="on"/>
+  </target>
+
+  <target name="run" depends="compile" description="运行任务">
+    <java classname="Hello" fork="true">
+      <classpath>
+        <pathelement path="build/classes"/>
+      </classpath>
+    </java>
+  </target>
+
+  <target name="jar" depends="run" description="打包任务">
+    <mkdir dir="build/jar"/>
+    <jar destfile="build/jar/hello.jar" basedir="build/classes">
+      <manifest>
+        <attribute name="Main-Class" value="Hello"/>
+      </manifest>
+    </jar>
+  </target>
+</project>
