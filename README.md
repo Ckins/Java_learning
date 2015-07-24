@@ -1,4 +1,3 @@
-#Java Beginer's Learning Project
 ##Enviornment & Tools
 java version "1.6.0_35"</br>
 OpenJDK Runtime Environment (IcedTea6 1.13.7) (6b35-1.13.7-1ubuntu0.14.04.1)</br>
