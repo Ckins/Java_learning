@@ -1,27 +1,44 @@
 <?xml version="1.0"?>
-<project name="javacTest" default="jar" basedir=".">
-    <target name="clean">
-        <delete dir="build"/>
-    </target>
+<project name="Retirement" basedir="." default="main">
+  <!-- 定义常用的属性 -->
+  <property name="src.dir"     value="src"/>
+  <property name="build.dir"   value="build"/>
+  <property name="classes.dir" value="${build.dir}/classes"/>
+  <property name="jar.dir"     value="${build.dir}/jar"/>
+  <property name="version"     value="1.0"/>
+  <property name="fullname"    value="${ant.project.name}-${version}"/>
+  <property name="main-class"  value="Retirement"/>
 
-    <target name="compile" depends="clean">
-        <mkdir dir="build/classes"/>
-        <javac srcdir="src" destdir="build/classes" includeantruntime="on"/>
-    </target>
+  <!-- 清除任务 -->
+  <target name="clean">
+    <delete dir="${build.dir}"/>
+  </target>
 
-    <target name="run" depends="compile">
-        <java classname="Retirement" fork="true">
-            <classpath>
-                <pathelement path="build/classes"/>
-            </classpath>
-        </java>
-    </target>
+  <!-- 编译任务 -->
+  <target name="compile">
+    <mkdir dir="${classes.dir}"/>
+    <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="on"/>
+  </target>
 
-    <target name="jar" depends="run">
-        <jar destfile="Retirement.jar" basedir="build/classes">
-            <manifest>
-                <attribute name="Main-class" value="Retirement"/>
-            </manifest>
-        </jar>
-    </target>
+  <!-- 打包任务 -->
+  <target name="jar" depends="compile">
+    <mkdir dir="${jar.dir}"/>
+    <jar destfile="${jar.dir}/${fullname}.jar" basedir="${classes.dir}">
+      <manifest>
+        <attribute name="Main-Class" value="${main-class}"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <!-- 运行任务 -->
+  <target name="run" depends="jar">
+    <java jar="${jar.dir}/${fullname}.jar" fork="true"/>
+  </target>
+
+  <!-- 任务：清除并打包 -->
+  <target name="clean-build" depends="clean,jar"/>
+
+  <!-- 默认任务：清除并运行 -->
+  <target name="main" depends="clean,run"/>
+
 </project>
