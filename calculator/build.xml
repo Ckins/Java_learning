@@ -1,27 +1,22 @@
 <?xml version="1.0"?>
-<project name="javacTest" default="jar" basedir=".">
+<project name="HelloWorld" basedir="." default="main">
+
+    <property name="src.dir"     value="src"/>
+
+    <property name="build.dir"   value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="jar.dir"     value="${build.dir}/jar"/>
+
+    <property name="main-class"  value="oata.HelloWorld"/>
+
+
+
     <target name="clean">
-        <delete dir="build"/>
+        <delete dir="${build.dir}"/>
     </target>
 
-    <target name="compile" depends="clean">
-        <mkdir dir="build/classes"/>
-        <javac srcdir="src" destdir="build/classes" includeantruntime="on"/>
+    <target name="compile">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}"/>
     </target>
-
-    <target name="run" depends="compile">
-        <java classname="CalculatorPanel" fork="true">
-            <classpath>
-                <pathelement path="build/classes"/>
-            </classpath>
-        </java>
-    </target>
-
-    <target name="jar" depends="run">
-        <jar destfile="CalculatorPanel.jar" basedir="build/classes">
-            <manifest>
-                <attribute name="Main-class" value="CalculatorPanel"/>
-            </manifest>
-        </jar>
-    </target>
-</project>
+    
